@@ -3,6 +3,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { addHours } from 'date-fns/esm';
 import { Navbar, CalendarEvent } from "../";
 import { getMessagesES, localizer } from '../../helpers';
+import { useState } from 'react';
 
 const events =[
     {
@@ -20,6 +21,8 @@ const events =[
 
 
 export const CalendarPage = () => {
+
+    const [ lastView, setLastView ] = useState( localStorage.getItem( 'lastView' ) || 'week' );
 
     const eventStyleGetter = ( event, start, end, isSelected ) => {
 
@@ -50,7 +53,8 @@ export const CalendarPage = () => {
 
     const onViewChanged = ( event ) => {
 
-        console.log( 'onViewChanged' )
+        localStorage.setItem( 'lastView', event );
+        setLastView( event );
         
     };
 
@@ -62,7 +66,7 @@ export const CalendarPage = () => {
                     event: CalendarEvent
                 }}
                 culture='es'
-                defaultView={ 'agenda' }
+                defaultView={ lastView }
                 endAccessor="end"
                 eventPropGetter={ eventStyleGetter }
                 events={ events }
