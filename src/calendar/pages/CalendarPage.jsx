@@ -36,6 +36,24 @@ export const CalendarPage = () => {
 
     };
 
+    const onDoubleClick = ( event ) => {
+
+        console.log( 'onDoubleClick' )
+        
+    };
+
+    const onSelect = ( event ) => {
+
+        console.log( 'onSelect' )
+        
+    };
+
+    const onViewChanged = ( event ) => {
+
+        console.log( 'onViewChanged' )
+        
+    };
+
     return (
         <>
             <Navbar />
@@ -44,6 +62,7 @@ export const CalendarPage = () => {
                     event: CalendarEvent
                 }}
                 culture='es'
+                defaultView={ 'agenda' }
                 endAccessor="end"
                 eventPropGetter={ eventStyleGetter }
                 events={ events }
@@ -51,6 +70,9 @@ export const CalendarPage = () => {
                 messages={ getMessagesES() }
                 startAccessor="start"
                 style={{ height: 'calc( 100vh - 80px )' }}
+                onDoubleClickEvent={ onDoubleClick }
+                onSelectEvent={ onSelect }
+                onView={ onViewChanged }
             />
         </>
     );
