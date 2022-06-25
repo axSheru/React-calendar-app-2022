@@ -4,6 +4,7 @@ import { addHours } from 'date-fns/esm';
 import { Navbar, CalendarEvent, CalendarModal } from "../";
 import { getMessagesES, localizer } from '../../helpers';
 import { useState } from 'react';
+import { useUIStore } from '../../hooks';
 
 const events =[
     {
@@ -21,6 +22,8 @@ const events =[
 
 
 export const CalendarPage = () => {
+
+    const { openDateModal } = useUIStore();
 
     const [ lastView, setLastView ] = useState( localStorage.getItem( 'lastView' ) || 'week' );
 
@@ -41,7 +44,7 @@ export const CalendarPage = () => {
 
     const onDoubleClick = ( event ) => {
 
-        console.log( 'onDoubleClick' )
+        openDateModal();
         
     };
 
