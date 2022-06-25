@@ -7,6 +7,7 @@ import es from 'date-fns/locale/es';
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { useMemo } from "react";
+import { useUIStore } from "../../hooks";
 
 registerLocale( 'es', es );
 
@@ -25,7 +26,7 @@ ReactModal.setAppElement( '#root' );
 
 export const CalendarModal = () => {
 
-    const [ isOpen, setIsOpen ] = useState( true );
+    const { isDateModalOpen, closeDateModal } = useUIStore();
 
     const [ formSubmited, setformSubmited ] = useState( false );
 
@@ -61,7 +62,7 @@ export const CalendarModal = () => {
     };
 
     const onCloseModal = () => {
-        setIsOpen( false );
+        closeDateModal();
     };
 
     const onSubmit = ( event ) => {
@@ -85,7 +86,7 @@ export const CalendarModal = () => {
         <ReactModal
             className='modal'
             closeTimeoutMS={ 200 }
-            isOpen={ isOpen }
+            isOpen={ isDateModalOpen }
             onRequestClose={ onCloseModal }
             overlayClassName='modal-fondo'
             style={ customStyles }
