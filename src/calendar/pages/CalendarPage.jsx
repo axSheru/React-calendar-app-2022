@@ -4,24 +4,12 @@ import { addHours } from 'date-fns/esm';
 import { Navbar, CalendarEvent, CalendarModal } from "../";
 import { getMessagesES, localizer } from '../../helpers';
 import { useState } from 'react';
-import { useUIStore } from '../../hooks';
-
-const events =[
-    {
-        title: 'Ver Kenobi',
-        notes: 'Es el final de temporada.',
-        start: new Date(),
-        end: addHours( new Date(), 2 ),
-        bgColor: '#DEA1F9',
-        user: {
-            _id: 123,
-            name: 'Alex'
-        }
-    }
-];
+import { useCalendarStore, useUIStore } from '../../hooks';
 
 
 export const CalendarPage = () => {
+
+    const { events } = useCalendarStore();
 
     const { openDateModal } = useUIStore();
 
