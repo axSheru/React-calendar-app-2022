@@ -1,6 +1,5 @@
 import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { addHours } from 'date-fns/esm';
 import { Navbar, CalendarEvent, CalendarModal } from "../";
 import { getMessagesES, localizer } from '../../helpers';
 import { useState } from 'react';
@@ -9,7 +8,7 @@ import { useCalendarStore, useUIStore } from '../../hooks';
 
 export const CalendarPage = () => {
 
-    const { events } = useCalendarStore();
+    const { events, setActiveEvent } = useCalendarStore();
 
     const { openDateModal } = useUIStore();
 
@@ -38,7 +37,7 @@ export const CalendarPage = () => {
 
     const onSelect = ( event ) => {
 
-        console.log( 'onSelect' )
+        setActiveEvent( event );
         
     };
 
