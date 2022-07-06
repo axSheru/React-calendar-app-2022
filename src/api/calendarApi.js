@@ -8,3 +8,5 @@ const calendarApi = axios.create({
 });
 
 // TODO Configurar interceptores.
+
+export default calendarApi;
