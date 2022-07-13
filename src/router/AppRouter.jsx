@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { LoginPage } from "../auth";
 import { CalendarPage } from "../calendar";
 import { useAuthStore } from "../hooks";
+import { Audio } from  'react-loader-spinner';
 
 
 export const AppRouter = () => {
@@ -12,11 +13,20 @@ export const AppRouter = () => {
     useEffect(() => {
       checkAuthToken();
     }, []);
-    
 
     if ( status === 'checking' ) {
         return (
-            <h3>Cargando...</h3>
+            <>
+                <div className="center-loader">
+                    <Audio
+                        height="100"
+                        width="100"
+                        color='cyan'
+                        ariaLabel='loading'
+                        />
+                    <h3>Cargando...</h3>
+                </div>
+            </>
         );
     }
 
