@@ -59,3 +59,12 @@
   position: fixed;
   width: 70px;
 }
+
+/* Loaders */
+
+.center-loader {
+  align-items: center;
+  display: flex;
+  height: 100vh; /* Magic here */
+  justify-content: center;
+}
