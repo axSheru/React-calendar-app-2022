@@ -21,7 +21,7 @@ export const AppRouter = () => {
                     <Audio
                         height="100"
                         width="100"
-                        color='cyan'
+                        color='#347CF7'
                         ariaLabel='loading'
                         />
                     <h3>Cargando...</h3>
