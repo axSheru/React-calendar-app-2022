@@ -4,11 +4,12 @@ import { Navbar, CalendarEvent, CalendarModal, FABAddNew, FABDelete } from "../"
 import { getMessagesES, localizer } from '../../helpers';
 import { useState } from 'react';
 import { useCalendarStore, useUIStore } from '../../hooks';
+import { useEffect } from 'react';
 
 
 export const CalendarPage = () => {
 
-    const { events, setActiveEvent } = useCalendarStore();
+    const { events, setActiveEvent, startLoadingEvents } = useCalendarStore();
 
     const { openDateModal } = useUIStore();
 
@@ -47,6 +48,11 @@ export const CalendarPage = () => {
         setLastView( event );
         
     };
+
+    useEffect(() => {
+        startLoadingEvents();
+    }, []);
+    
 
     return (
         <>
