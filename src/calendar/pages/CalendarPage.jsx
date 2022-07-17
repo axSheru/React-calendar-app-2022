@@ -3,11 +3,13 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Navbar, CalendarEvent, CalendarModal, FABAddNew, FABDelete } from "../";
 import { getMessagesES, localizer } from '../../helpers';
 import { useState } from 'react';
-import { useCalendarStore, useUIStore } from '../../hooks';
+import { useAuthStore, useCalendarStore, useUIStore } from '../../hooks';
 import { useEffect } from 'react';
 
 
 export const CalendarPage = () => {
+
+    const { user } = useAuthStore();
 
     const { events, setActiveEvent, startLoadingEvents } = useCalendarStore();
 
@@ -17,8 +19,10 @@ export const CalendarPage = () => {
 
     const eventStyleGetter = ( event, start, end, isSelected ) => {
 
+        const myEvent = ( ( user.uid === event.user._id ) || ( user.uid === event.user.uid ) );
+
         const style = {
-            backgroundColor: '#347CF7',
+            backgroundColor: myEvent ? '#347CF7' : '#465660',
             borderRadius: '0px',
             opacity: 0.8,
             color: 'white'
