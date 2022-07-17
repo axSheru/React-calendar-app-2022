@@ -18,12 +18,11 @@ export const useCalendarStore = () => {
 
         if ( calendarEvent.id ) {
             // Update
-            dispatch( onUpdateEvent({ ...calendarEvent }) );
+            await calendarApi.put( `/events/${ calendarEvent.id }`, calendarEvent );
+            dispatch( onUpdateEvent({ ...calendarEvent, user }) );
         } else {
             // Create
-
             const { data } = await calendarApi.post( '/events', calendarEvent );
-
             dispatch( onAddNewEvent({ ...calendarEvent, id: data.evento.id, user }) );
         }
 
