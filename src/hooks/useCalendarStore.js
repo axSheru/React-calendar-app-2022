@@ -16,14 +16,21 @@ export const useCalendarStore = () => {
 
     const startSavingEvent = async ( calendarEvent ) => {
 
-        if ( calendarEvent.id ) {
-            // Update
-            await calendarApi.put( `/events/${ calendarEvent.id }`, calendarEvent );
-            dispatch( onUpdateEvent({ ...calendarEvent, user }) );
-        } else {
-            // Create
-            const { data } = await calendarApi.post( '/events', calendarEvent );
-            dispatch( onAddNewEvent({ ...calendarEvent, id: data.evento.id, user }) );
+        try {
+
+            if ( calendarEvent.id ) {
+                // Update
+                await calendarApi.put( `/events/${ calendarEvent.id }`, calendarEvent );
+                dispatch( onUpdateEvent({ ...calendarEvent, user }) );
+            } else {
+                // Create
+                const { data } = await calendarApi.post( '/events', calendarEvent );
+                dispatch( onAddNewEvent({ ...calendarEvent, id: data.evento.id, user }) );
+            }
+            
+        } catch (error) {
+            console.error( error );
+            Swal.fire( 'Error al guardar', error.response.data.msg, 'error' );
         }
 
     };
