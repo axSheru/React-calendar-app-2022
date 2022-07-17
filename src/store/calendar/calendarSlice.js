@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // NOTE Event structure reference.
 /* const tempEvent = {
-    _id: new Date().getTime(),
+    id: new Date().getTime(),
     title: 'Ver Kenobi',
     notes: 'Es el final de temporada.',
     start: new Date(),
     end: addHours( new Date(), 2 ),
     bgColor: '#DEA1F9',
     user: {
-        _id: 123,
+        id: 123,
         name: 'Alex'
     }
 }; */
@@ -34,13 +34,13 @@ export const calendarSlice = createSlice({
         },
         onUpdateEvent: ( state, { payload } ) => {
             state.events = state.events.map( event => {
-                return ( event._id === payload._id )
+                return ( event.id === payload.id )
                     ? payload
                     : event;
             });
         }, onDeleteEvent: ( state ) => {
             if ( state.activeEvent ) {
-                state.events = state.events.filter( event => event._id !== state.activeEvent._id );
+                state.events = state.events.filter( event => event.id !== state.activeEvent.id );
                 state.activeEvent = null;
             }
         }, onLoadEvents: ( state, { payload = [] } ) => {

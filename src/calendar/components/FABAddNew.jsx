@@ -15,7 +15,7 @@ export const FABAddNew = () => {
             end: addHours( new Date(), 2 ),
             bgColor: '#DEA1F9',
             user: {
-                _id: 123,
+                id: 123,
                 name: 'Alex'
             }
         });
