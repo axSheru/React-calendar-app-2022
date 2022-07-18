@@ -1,9 +1,11 @@
 export const getEnvVariables = () => {
 
-    import.meta.env;
+    // NOTE: Se comenta porque tiene problemas con vite. De momento se exportarán manualmente.
+    // import.meta.env;
 
     return {
-        ...import.meta.env
+        // ...import.meta.env
+        VITE_APP_URL: import.meta.env.VITE_APP_URL
     };
 
 };
