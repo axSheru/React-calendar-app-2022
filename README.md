@@ -2,6 +2,7 @@
 
 In this project we create a calendar where we can sign up, sign in and create, edit and delete events and interact with other users events.  
 This project uses as backend [this other project](https://github.com/axSheru/React-calendar-backend)
+You can see it live in [this link](https://mern-calendar-axsheru.herokuapp.com/auth/login)
 
 # Instructions.
 
