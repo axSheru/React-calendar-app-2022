@@ -15,8 +15,6 @@ describe('Pruebas en calendarApi.', () => {
         localStorage.setItem( 'token', token );
         const res = await calendarApi.get( '/auth' );
 
-        console.log(res)
-
         expect( res.config.headers['x-token'] ).toBe( token );
 
     });
