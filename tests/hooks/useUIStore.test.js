@@ -52,4 +52,45 @@ describe('Pruebas en el hook useUIStore.', () => {
 
     });
 
+    test('La acción closeDateModal debe de colocar false en la propiedad isDateModalOpen.', () => {
+
+        const mockStore = getMockStore({ isDateModalOpen: true });
+
+        const { result } = renderHook( () => useUIStore(), {
+            wrapper: ({ children }) => <Provider store={ mockStore } >{ children }</Provider>
+        });
+
+        const { closeDateModal } = result.current;
+
+        act( () => {
+            closeDateModal();
+        });
+
+        expect( result.current.isDateModalOpen ).toBeFalsy();
+
+    });
+
+    test('La acción toggleDateModal debe de cambiar la propiedad isDateModalOpen a su valor contrario.', () => {
+
+        const mockStore = getMockStore({ isDateModalOpen: true });
+
+        const { result } = renderHook( () => useUIStore(), {
+            wrapper: ({ children }) => <Provider store={ mockStore } >{ children }</Provider>
+        });
+
+        act( () => {
+            result.current.toggleDateModal();
+        });
+
+        expect( result.current.isDateModalOpen ).toBeFalsy();
+
+
+        act( () => {
+            result.current.toggleDateModal();
+        });
+
+        expect( result.current.isDateModalOpen ).toBeTruthy();
+
+    });
+
 });
