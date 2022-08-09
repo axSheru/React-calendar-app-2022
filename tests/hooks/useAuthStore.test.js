@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { act, renderHook } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { useAuthStore } from "../../src/hooks";
 import { authSlice } from "../../src/store";
@@ -63,6 +63,36 @@ describe('Pruebas en el hook useAuthStore.', () => {
 
         expect( localStorage.getItem( 'token' ) ).toEqual( expect.any( String ) );
         expect( localStorage.getItem( 'token-init-date' ) ).toEqual( expect.any( String ) );
+
+    });
+
+    test('La acción startLogin debe de fallar al realizar el login.', async () => {
+
+        localStorage.clear();
+
+        const mockStore = getMockStore({ ...notAuthenticatedState });
+
+        const { result } = renderHook( () => useAuthStore(), {
+            wrapper: ({ children }) => <Provider store={ mockStore }>{ children }</Provider>
+        });
+
+        await act( async () => {
+            await result.current.startLogin({ email: 'error@google.com', 'password': '12345678' });
+        });
+
+        expect( localStorage.getItem( 'token' ) ).toBeNull();
+        expect( localStorage.getItem( 'token-init-date' ) ).toBeNull();
+
+        const { errorMessage, status, user } = result.current;
+        expect({ errorMessage, status, user }).toEqual({
+            errorMessage: 'Credenciales incorrectas.',
+            status: 'not-authenticated',
+            user: {}
+        });
+
+        await waitFor(
+            () => expect( result.current.errorMessage ).toBeUndefined()
+        );
 
     });
 
