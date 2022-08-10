@@ -19,6 +19,8 @@ describe('Pruebas en el hook useAuthStore.', () => {
         });
     };
 
+    beforeEach( () => localStorage.clear() );
+
     test('Debe de retornar los valores por defecto.', () => {
 
         const mockStore = getMockStore({ ...initialState });
@@ -40,8 +42,6 @@ describe('Pruebas en el hook useAuthStore.', () => {
     });
 
     test('La acción startLogin debe de realizar el login correctamente.', async () => {
-
-        localStorage.clear();
 
         const mockStore = getMockStore({ ...notAuthenticatedState });
 
@@ -67,8 +67,6 @@ describe('Pruebas en el hook useAuthStore.', () => {
     });
 
     test('La acción startLogin debe de fallar al realizar el login.', async () => {
-
-        localStorage.clear();
 
         const mockStore = getMockStore({ ...notAuthenticatedState });
 
