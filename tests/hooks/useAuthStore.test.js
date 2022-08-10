@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
+import calendarApi from "../../src/api/calendarApi";
 import { useAuthStore } from "../../src/hooks";
 import { authSlice } from "../../src/store";
 import { initialState, notAuthenticatedState } from "../fixtures/authStates";
@@ -91,6 +92,40 @@ describe('Pruebas en el hook useAuthStore.', () => {
         await waitFor(
             () => expect( result.current.errorMessage ).toBeUndefined()
         );
+
+    });
+
+    test('La acción startRegister debe de crear un usuario correctamente.', async () => {
+
+        const mockStore = getMockStore({ ...notAuthenticatedState });
+
+        const { result } = renderHook( () => useAuthStore(), {
+            wrapper: ({ children }) => <Provider store={ mockStore }>{ children }</Provider>
+        });
+
+        const spy = jest.spyOn( calendarApi, 'post' ).mockReturnValue({
+            data: {
+                ok: true,
+                uid: '123456789',
+                name: 'Test User',
+                token: 'UN-TOKEN'
+            }
+        });
+
+        await act( async () => {
+            await result.current.startRegister({ email: 'error@google.com', 'password': '12345678', 'name': 'Test user 2' });
+        });
+
+        const { errorMessage, status, user } = result.current;
+
+        expect({ errorMessage, status, user }).toEqual({
+            errorMessage: undefined,
+            status: 'authenticated',
+            user: { name: 'Test User', uid: '123456789' }
+        });
+
+        // Reestablece el mock para que podamos reutilizarlo en otro test.
+        spy.mockRestore();
 
     });
 
