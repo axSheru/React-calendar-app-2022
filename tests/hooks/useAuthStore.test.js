@@ -59,7 +59,7 @@ describe('Pruebas en el hook useAuthStore.', () => {
         expect({ errorMessage, status, user }).toEqual({
             errorMessage: undefined,
             status: 'authenticated',
-            user: { name: 'Test User', uid: '62d62013dd1328234609e862' }
+            user: { name: 'Test User', uid: '62f328ff17229eefa0a650d9' }
         });
 
         expect( localStorage.getItem( 'token' ) ).toEqual( expect.any( String ) );
@@ -69,6 +69,8 @@ describe('Pruebas en el hook useAuthStore.', () => {
 
     test('La acción startLogin debe de fallar al realizar el login.', async () => {
 
+        localStorage.clear();
+
         const mockStore = getMockStore({ ...notAuthenticatedState });
 
         const { result } = renderHook( () => useAuthStore(), {
@@ -76,7 +78,7 @@ describe('Pruebas en el hook useAuthStore.', () => {
         });
 
         await act( async () => {
-            await result.current.startLogin({ email: 'error@google.com', 'password': '12345678' });
+            await result.current.startLogin({ email: 'error@google.com', 'password': '123456789' });
         });
 
         expect( localStorage.getItem( 'token' ) ).toBeNull();
@@ -127,6 +129,27 @@ describe('Pruebas en el hook useAuthStore.', () => {
         // Reestablece el mock para que podamos reutilizarlo en otro test.
         spy.mockRestore();
 
+    });
+
+    test('La acción startRegister debe de fallar al crear un usuario.', async () => {
+
+        const mockStore = getMockStore({ ...notAuthenticatedState });
+
+        const { result } = renderHook( () => useAuthStore(), {
+            wrapper: ({ children }) => <Provider store={ mockStore }>{ children }</Provider>
+        });
+
+        await act( async () => {
+            await result.current.startRegister( testUserCredentials );
+        });
+
+        const { errorMessage, status, user } = result.current;
+
+        expect({ errorMessage, status, user }).toEqual({
+            "errorMessage": "El email ingresado ya está en uso.",
+            "status": "not-authenticated",
+            "user": {},
+        });
     });
 
 });
