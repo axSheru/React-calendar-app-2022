@@ -152,4 +152,52 @@ describe('Pruebas en el hook useAuthStore.', () => {
         });
     });
 
+    test('La acción checkAuthToken debe de fallar si no hay token.', async () => {
+
+        const mockStore = getMockStore({ ...initialState });
+
+        const { result } = renderHook( () => useAuthStore(), {
+            wrapper: ({ children }) => <Provider store={ mockStore }>{ children }</Provider>
+        });
+
+        await act( async () => {
+            await result.current.checkAuthToken();
+        });
+
+        const { errorMessage, status, user } = result.current;
+
+        expect({ errorMessage, status, user }).toEqual({
+            "errorMessage": undefined,
+            "status": "not-authenticated",
+            "user": {},
+        });
+
+    });
+
+    test('La acción checkAuthToken debe de autenticar al usuario si hay un token.', async () => {
+
+        const { data } = await calendarApi.post( '/auth', testUserCredentials );
+
+        localStorage.setItem( 'token', data.token );
+
+        const mockStore = getMockStore({ ...initialState });
+
+        const { result } = renderHook( () => useAuthStore(), {
+            wrapper: ({ children }) => <Provider store={ mockStore }>{ children }</Provider>
+        });
+
+        await act( async () => {
+            await result.current.checkAuthToken();
+        });
+
+        const { errorMessage, status, user } = result.current;
+
+        expect({ errorMessage, status, user }).toEqual({
+            errorMessage: undefined,
+            status: 'authenticated',
+            user: { name: 'Test User', uid: '62f328ff17229eefa0a650d9' }
+        });
+
+    });
+
 });
