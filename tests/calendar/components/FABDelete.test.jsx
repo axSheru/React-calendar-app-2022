@@ -23,4 +23,20 @@ describe('Pruebas en <FABDelete />.', () => {
 
     });
 
+    test( 'Debe de mostrar el botón si hay un evento activo.', () => {
+
+        useCalendarStore.mockReturnValue({
+            activeEvent: true
+        });
+
+        render(<FABDelete />);
+
+        // screen.debug();// Para mostrar cómo se muestra el componente que se está renderizando.
+        
+        const btn = screen.getByLabelText( 'btn-delete' );
+
+        expect( btn.style.display ).toBe( '' );
+
+    });
+
 });
