@@ -6,10 +6,10 @@ jest.mock( '../../../src/hooks' )
 
 describe('Pruebas en <FABDelete />.', () => {
 
-    test( 'Debe de mostrar el componente correctamente.', () => {
+    test( 'Debe de mostrar el estado default del componente correctamente.', () => {
 
         useCalendarStore.mockReturnValue({
-            hasEventSelected: false
+            activeEvent: false
         });
 
         render(<FABDelete />);
