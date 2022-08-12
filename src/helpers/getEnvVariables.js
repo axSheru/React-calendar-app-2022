@@ -5,7 +5,8 @@ export const getEnvVariables = () => {
 
     return {
         // ...import.meta.env
-        VITE_APP_URL: import.meta.env.VITE_APP_URL
+        VITE_APP_URL: import.meta.env.VITE_APP_URL,
+        VITE_MODE: import.meta.env.VITE_MODE
     };
 
 };
